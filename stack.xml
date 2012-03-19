@@ -6,17 +6,23 @@
   <url>http://ros.org/wiki/sr_contrib</url>
   <depend stack="arm_navigation" /> <!-- kinematics_msgs -->
   <depend stack="common_msgs" /> <!-- geometry_msgs, sensor_msgs, visualization_msgs -->
+  <depend stack="diagnostics" /> <!-- diagnostic_aggregator -->
+  <depend stack="diagnostics_monitors" /> <!-- robot_monitor -->
   <depend stack="eigen" /> <!-- eigen -->
   <depend stack="geometry" /> <!-- tf -->
   <depend stack="nodelet_core" /> <!-- nodelet -->
   <depend stack="object_manipulation" /> <!-- object_manipulation_msgs -->
   <depend stack="perception_pcl" /> <!-- pcl, pcl_ros -->
   <depend stack="perception_pcl_addons" /> <!-- pcl_visualization -->
-  <depend stack="pr2_controllers" /> <!-- pr2_controllers_msgs -->
+  <depend stack="pr2_controllers" /> <!-- pr2_mechanism_controllers, pr2_controllers_msgs -->
   <depend stack="pr2_mechanism" /> <!-- pr2_mechanism_msgs -->
+  <depend stack="pr2_simulator" /> <!-- pr2_gazebo_plugins -->
+  <depend stack="robot_model" /> <!-- robot_state_publisher -->
   <depend stack="ros" />
   <depend stack="ros_comm" /> <!-- std_msgs, rospy, roscpp -->
   <depend stack="shadow_robot" /> <!-- sr_robot_msgs, sr_movements, sr_hand, sr_utilities -->
   <depend stack="shadow_robot_ethercat" /> <!-- sr_robot_lib -->
+  <depend stack="simulator_gazebo" /> <!-- gazebo_worlds -->
+  <depend stack="visualization" /> <!-- rviz -->
 
 </stack>
