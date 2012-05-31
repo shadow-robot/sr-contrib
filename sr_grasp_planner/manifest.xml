@@ -1,8 +1,8 @@
 <package>
   <description brief="sr_grasp_planner">
 
-
-    Plans grasps for unknown objects using the Shadow Dextrous Hand.
+    Plans grasps for unknown objects using the Shadow Dextrous Hand. It is still highly
+    experimental and can not be used as is.
 
   </description>
   <author>Ugo Cupcic</author>

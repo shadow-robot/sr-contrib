@@ -1,7 +1,7 @@
 <stack>
-  <description brief="sr_contrib">This stack contains different high level packages which we find useful.</description>
+  <description brief="sr_contrib">This stack contains different high level packages which we find useful. They can be slightly experimental and are not as stable than the default shadow_robot stack.</description>
   <author>Maintained by Ugo Cupcic / software@shadowrobot.com</author>
-  <license>GPL,BSD,LGPL</license>  
+  <license>GPL,BSD,LGPL</license>
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/sr_contrib</url>
   <depend stack="arm_navigation" /> <!-- kinematics_msgs -->

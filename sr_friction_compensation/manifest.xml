@@ -2,7 +2,8 @@
   <description brief="sr_friction_compensation">
 
      sr_friction_compensation computes the friction compensation map by slowly moving a joint
-     through its range and measuring the necessary force.
+     through its range and measuring the necessary force. It is still highly experimental and
+     can not be used as is.
 
   </description>
   <author>Ugo Cupcic</author>
