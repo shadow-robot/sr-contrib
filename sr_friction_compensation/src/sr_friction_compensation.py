@@ -29,7 +29,7 @@ from scipy.optimize import leastsq
 import numpy
 import time
 
-epsilon = 0.02
+epsilon = 0.01
 
 class SrFrictionCompensation(object):
     """
@@ -64,7 +64,7 @@ class SrFrictionCompensation(object):
         rospy.loginfo("sign: "+str(self.sign))
 
         self.publisher = rospy.Publisher("/sr_friction_compensation/"+self.joint_name, Float64)
-        self.rate = rospy.Rate(100)
+        self.rate = rospy.Rate(30)
 
         self.forces = []
         self.positions = []
@@ -106,13 +106,14 @@ class SrFrictionCompensation(object):
             rospy.loginfo("Moving to the starting position ("+str(self.max)+")")
         if( start_at_min ):
             #250 should be big enough to move the finger to the end of its range
-            msg.data = self.sign * 250
+            msg.data = self.sign * 600
             while (self.lib.get_position(self.joint_name) > self.min) and not rospy.is_shutdown():
+                rospy.loginfo("Read position ("+str(self.lib.get_position(self.joint_name))+")")
                 self.publisher.publish(msg)
                 self.rate.sleep()
         else:
             #250 should be big enough to move the finger to the end of its range
-            msg.data = -self.sign * 250
+            msg.data = -self.sign * 600
 
             while (self.lib.get_position(self.joint_name) < self.max) and not rospy.is_shutdown():
                 self.publisher.publish(msg)
@@ -145,27 +146,30 @@ class SrFrictionCompensation(object):
         if increasing:
             min_force = 0.
         else:
-            min_force = 70.
+            min_force = 0.
         force, pos = self.find_smallest_force(self.lib.get_position(self.joint_name), sign, min_force)
         if force != False:
             self.forces.append(force)
             self.positions.append(pos)
-            msg.data = sign*min_force
-            self.publisher.publish(msg)
+            #set the value smoothly to the minimum
+            for force_to_set in range(abs(force), min_force-1, -1):
+                msg.data = sign*force_to_set
+                self.publisher.publish(msg)
+                rospy.Rate(100).sleep()
             rospy.Rate(2).sleep()
 
     def find_smallest_force(self, first_position, sign, min_force):
         msg = Float64()
 
-        for force in range(min_force, 400):
+        for force in range(min_force, 600):
             if rospy.is_shutdown():
                 break
 
             if abs(self.lib.get_position(self.joint_name) - first_position) > epsilon:
                 #ok, the finger moved, return the necessary force
                 measured_force = self.lib.get_effort(self.joint_name)
-                print "finger moved from ",first_position, " with force ", measured_force
-                return measured_force, first_position
+                print "finger moved from ",first_position, " with force ", measured_force, " with command ", msg.data
+                return msg.data, first_position
             else:
                 msg.data = sign*force
                 self.publisher.publish(msg)
