@@ -69,6 +69,8 @@ class SrFrictionCompensation(object):
         self.forces = []
         self.positions = []
 
+        self.min_force = 0.0
+
     def run(self):
         self.lib.activate()
         time.sleep(0.5)
@@ -133,6 +135,8 @@ class SrFrictionCompensation(object):
             rospy.loginfo("Recording decreasing map, until"+str(self.min))
         msg = Float64()
 
+	self.min_force = 0.0
+
         if( increasing ):
             while (self.lib.get_position(self.joint_name) < self.max) and not rospy.is_shutdown():
                 self.map_step(sign, msg)
@@ -142,20 +146,23 @@ class SrFrictionCompensation(object):
 
     def map_step(self, sign, msg, increasing=True):
         #keep the tendon under tension
-        min_force = 0.
-        if increasing:
-            min_force = 0.
-        else:
-            min_force = 0.
-        force, pos = self.find_smallest_force(self.lib.get_position(self.joint_name), sign, min_force)
+        #min_force = 0.
+        #if increasing:
+        #    min_force = 0.
+        #else:
+        #    min_force = 0.
+        force, pos = self.find_smallest_force(self.lib.get_position(self.joint_name), sign, self.min_force)
         if force != False:
             self.forces.append(force)
             self.positions.append(pos)
             #set the value smoothly to the minimum
-            for force_to_set in range(abs(force), min_force-1, -1):
+            for force_to_set in range(abs(force), (abs(force) * 2 / 3), -1):
                 msg.data = sign*force_to_set
                 self.publisher.publish(msg)
+                self.min_force = force_to_set
                 rospy.Rate(100).sleep()
+                if abs(self.lib.get_position(self.joint_name) - pos) < (epsilon * 3 / 4):
+                    break
             rospy.Rate(2).sleep()
 
     def find_smallest_force(self, first_position, sign, min_force):
