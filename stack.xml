@@ -18,7 +18,7 @@
   <depend stack="pr2_mechanism" /> <!-- pr2_mechanism_msgs -->
   <depend stack="pr2_simulator" /> <!-- pr2_gazebo_plugins -->
   <depend stack="robot_model" /> <!-- robot_state_publisher -->
-  <depend stack="ros" />
+  <depend stack="ros" /> <!-- roslib -->
   <depend stack="ros_comm" /> <!-- std_msgs, rospy, roscpp -->
   <depend stack="shadow_robot" /> <!-- sr_robot_msgs, sr_movements, sr_hand, sr_utilities -->
   <depend stack="shadow_robot_ethercat" /> <!-- sr_robot_lib -->

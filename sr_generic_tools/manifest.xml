@@ -1,0 +1,20 @@
+<package>
+  <description brief="sr_generic_tools">
+
+     This package will contain a diverse set of tools for the Shadow Robot Hand
+
+  </description>
+  <author>Toni Oliver Duran</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/sr_generic_tools</url>
+  <depend package="roslib"/>
+  <depend package="rospy"/>
+  <depend package="sensor_msgs"/>
+  <depend package="sr_hand"/>
+  <depend package="sr_robot_msgs"/>
+  <depend package="std_msgs"/>
+
+</package>
+
+
