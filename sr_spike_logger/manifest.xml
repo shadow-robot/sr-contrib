@@ -1,0 +1,16 @@
+<package>
+  <description brief="sr_spike_logger">
+
+     sr_spike_logger
+
+  </description>
+  <author>hyflam</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/sr_spike_logger</url>
+  <depend package="sr_robot_msgs"/>
+  <depend package="roscpp"/>
+
+</package>
+
+

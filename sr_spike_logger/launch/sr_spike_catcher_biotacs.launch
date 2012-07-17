@@ -1,0 +1,19 @@
+<launch>
+  <node pkg="sr_spike_logger" name="sr_spike_catcher" type="sr_spike_catcher" output="screen" >
+    <param name="log_file_dir" type="string" value="$(find sr_spike_logger)/log" />
+    
+    <param name="ignore_FFJ1" type="int" value="1" />
+    <param name="ignore_MFJ1" type="int" value="1" />
+    <param name="ignore_RFJ1" type="int" value="1" />
+    <param name="ignore_LFJ1" type="int" value="1" />
+    <param name="ignore_THJ1" type="int" value="1" />
+    <param name="ignore_ACCX" type="int" value="1" />
+    <param name="ignore_ACCY" type="int" value="1" />
+    <param name="ignore_ACCZ" type="int" value="1" />
+    <param name="ignore_GYRX" type="int" value="1" />
+    <param name="ignore_GYRX" type="int" value="1" />
+    <param name="ignore_GYRY" type="int" value="1" />
+    <param name="ignore_GYRZ" type="int" value="1" />
+
+  </node>
+</launch>
