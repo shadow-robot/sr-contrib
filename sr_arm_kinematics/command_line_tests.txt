@@ -1,0 +1,39 @@
+COPY AND PASTE THESE LINES TO A TERMINAL
+IT SHOULD GIVE YOU THE FK FOR THE GIVEN JOINT STATE
+
+rosservice call /shadow_right_arm_kinematics/get_fk "{header: {frame_id: "shadowarm_base"}, fk_link_names: ["palm"], robot_state: {joint_state: {header: { seq: 57313,  stamp: {secs: 1311162659,nsecs: 346940994},  frame_id: ''}, name: ['WRJ1', 'WRJ2', 'ElbowJRotate', 'ElbowJSwing', 'ShoulderJRotate', 'ShoulderJSwing'],
+position: [0.0, 0.0, 0.78539816250000005, 1.5707963250000001, 0.0, 0.0]} } }"
+
+###########################################
+
+
+------------------
+COPY AND PASTE THESE LINES TO A TERMINAL
+IT SHOULD GIVE YOU THE IK FOR AN EXISTING POSITION
+
+rosservice call /shadow_right_arm_kinematics/get_ik "{
+ik_request:{
+ik_link_name: "palm",
+pose_stamped:{
+ header:{ seq: 0, stamp: {secs: 1311164025, nsecs: 700270985} , frame_id: "shadowarm_base"},
+ pose: {
+      position: {
+        x: 0.626,
+        y: -0.134,
+        z: 0.230},
+        orientation:{
+        x: 0.667386,
+        y: 0.260,
+        z: 0.667,
+        w: 0.312}
+}
+         },
+ik_seed_state: {
+joint_state: {
+header: { seq: 57313,  stamp: {secs: 1311162659,nsecs: 346940994},  frame_id: ''}, name: ['WRJ1', 'WRJ2', 'ElbowJRotate', 'ElbowJSwing', 'ShoulderJRotate', 'ShoulderJSwing'],
+position: [0.0, 0.0, 0.0, 0.78, 0.0, 0.78]
+     }
+            }
+        },
+timeout: 1000}"
+

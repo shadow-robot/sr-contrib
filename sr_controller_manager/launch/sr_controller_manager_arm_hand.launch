@@ -1,0 +1,3 @@
+<launch>
+  <node pkg="sr_controller_manager" name="sr_controller_manager" type="sr_controller_manager.py" args="sr_arm_controller_manager pr2_controller_manager" />
+</launch>

@@ -1,0 +1,16 @@
+<package>
+  <description brief="sr_arm_kinematics">
+
+    Currently only contains a launch file to start arm_kinematics for the shadow_arm
+    Depends on arm_kinematics package which you should compile and install from source see arm_kinematics on the ROS wiki
+
+  </description>
+  <author>Guillaume WALCK (UPMC)</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/sr_arm_kinematics</url>
+  <depend package="arm_kinematics"/>
+
+</package>
+
+

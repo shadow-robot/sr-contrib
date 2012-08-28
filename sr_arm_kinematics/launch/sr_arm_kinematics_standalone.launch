@@ -1,0 +1,11 @@
+<launch>
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find sr_hand)/model/robots/xacro/arm_and_hand_motor.urdf.xacro'" />
+  <node pkg="arm_kinematics" type="arm_kinematics" name="shadow_right_arm_kinematics" output="screen">
+                <param name="root_name" type="string" value="shadowarm_base"/>
+                <param name="tip_name" type="string" value="palm"/>
+                <param name="maxIterations" type="int" value="1000"/>
+                <param name="epsilon" type="double" value="0.001"/>
+        </node> 
+</launch>
+
+

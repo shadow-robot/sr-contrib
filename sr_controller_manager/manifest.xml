@@ -1,0 +1,18 @@
+<package>
+  <description brief="sr_controller_manager">
+
+	  sr_controller_manager packages provides a overlay to other controller managers services, connecting to them and giving access
+	  to their services in one single call. One can load, unload, switch, start, stop any controller in any of the 
+	  controller managers connected to sr_controller_manager. 
+
+  </description>
+  <author>Guillaume WALCK (UPMC)</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/sr_controller_manager</url>
+  <depend package="rospy"/>
+  <depend package="pr2_mechanism_msgs"/>
+
+</package>
+
+
