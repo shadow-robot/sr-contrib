@@ -24,5 +24,6 @@
   <depend stack="shadow_robot_ethercat" /> <!-- sr_robot_lib -->
   <depend stack="simulator_gazebo" /> <!-- gazebo_worlds -->
   <depend stack="visualization" /> <!-- rviz -->
+  <depend stack="urdf_tools" /> <!-- arm_kinematics -->
 
 </stack>
