@@ -1,7 +1,7 @@
 <package>
   <description brief="sr_automatic_pid_tuning">
 
-     sr_automatic_pid_tuning is an automatic pid tuner using eodev. It is still highly experimental and can not be used as is.
+     sr_automatic_pid_tuning is an automatic pid tuner using eodev. It is still highly experimental and can not be used as is. Not compiled by default. If you want to compile this package, you can remove the ROS_NOBUILD.
 
   </description>
   <author>Ugo Cupcic</author>
