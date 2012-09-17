@@ -17,7 +17,7 @@
 #
 
 import roslib; roslib.load_manifest('sr_hawk')
-import rospy, math
+import rospy, math, numpy
 from std_msgs.msg import Float64
 
 from parser import HAWKParser
@@ -61,34 +61,13 @@ class HAWK(object):
         Usually called from a timer at a given rate.
         """
         new_targets_hawk = self.parser.next_data()
-        new_targets_hand = self.multiply(new_targets_hawk, self.hawk_to_hand_mapping)
+        new_targets_hawk = numpy.array(new_targets_hawk)
+        new_targets_hand = new_targets_hawk * self.hawk_to_hand_mapping
 
         msg = Float64()
-        for target, publisher in zip(new_targets_hand, self.publishers):
+        for target, publisher in zip(new_targets_hand.tolist()[0], self.publishers):
             msg.data = math.radians(target)
             publisher.publish(msg)
-
-    def multiply(self, hawk, mapping):
-        """
-        Multiplies the vector of hawk targets by the mapping matrix
-
-        @return the vector of targets for the hand
-        """
-        result = []
-
-        rospy.logdebug( "number of hand joints: " + str(len(mapping[0]))
-                        + " / " + str(len(self.hand_names))
-                        + "   | number of hawk joints: " + str(len(mapping))
-                        + " / " + str(len(self.hawk_names))
-                        + " / " + str(len(hawk)) )
-
-        for hand_index in range(0, len(self.hand_names)):
-            sum_rows = 0.0
-            for hawk_index in range(0, len(self.hawk_names)):
-                sum_rows += hawk[hawk_index] * mapping[hawk_index][hand_index]
-            result.append(sum_rows)
-        return result
-
 
     def init_pub_(self):
         for joint in self.hand_names:
@@ -147,7 +126,7 @@ class HAWK(object):
         self.hawk_to_hand_mapping[ self.hawk_names.index("mf_abd") ][ self.hand_names.index("MFJ4")] = 1.0
         self.hawk_to_hand_mapping[ self.hawk_names.index("rf_abd") ][ self.hand_names.index("LFJ4")] = 1.0
 
-
+        self.hawk_to_hand_mapping = numpy.matrix(self.hawk_to_hand_mapping)
 
 if __name__ == '__main__':
     rospy.init_node("hawk_to_hand")
