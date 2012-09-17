@@ -1,0 +1,48 @@
+ShadowHAWK Data Sheet
+_____________________
+
+The following information is relevant to the file shadow.csv
+
+Author: Dr Cheryl Metcalf
+Email: c.d.metcalf@soton.ac.uk
+Date: 	15/08/2012
+Copyright: University of Southampton
+
+____________________________________________________________
+
+The data file shadow.csv contains a 23-column output from the HAWK algorithms. For simplicity the columns have been defined by the following variable names:
+
+Wrist
+- fe = flexion/extension of the wrist joint
+- rud = radial/ulnar deviation of the wrist joint
+
+Palmar Arch (three planes are defined for the palmar arch)
+- rad/mid = flexion/extension angle defined between the radial and middle hand planes
+- mid/uln = flexion/extension angle defined between the middle and ulnar hand planes
+
+Fingers
+- mcp = flexion/extension of the mcp joint 
+- pip = flexion/extension of the pip joint 
+- dip = flexion/extension of the dip joint 
+
+- abd = abduction angle between the fingers
+
+- abd2 = abduction between the index and middle fingers
+- abd3 = abduction between the middle and ring fingers
+- abd4 = abduction between the ring and little fingers
+
+Thumb
+- mcp = flexion/extension of the mcp joint 
+- ip = flexion/extension of the ip joint 
+- abd = abduction between the thumb and the radial hand plane
+- rot = an extension of the palmar arch, rotation anatomically is the movement of the CMC joint that manifests in the angle between the thumb hand plane and radial hand plane
+______________________________________________________________
+
+These data were collected by the Vicon system sampling at 100Hz. 50 frames are generated in the .csv file and they combine to the grasping portion of the activity only.
+
+Flexion = +ve
+Extension = -ve
+Abd = +ve
+Add = -ve
+Ulnar =  +ve
+Radial = -ve
