@@ -1,6 +1,6 @@
 <launch>
   <include file="$(find sr_description)/loaders/load_arm_and_hand_model.launch" />
-  <node pkg="sr_kinematics" type="sr_arm_kinematics6D" name="shadow_right_arm_kinematics" output="screen">
+  <node pkg="sr_arm_kinematics" type="sr_arm_kinematics6D" name="shadow_right_arm_kinematics" output="screen">
                 <param name="root_name" type="string" value="shadowarm_base"/>
                 <param name="tip_name" type="string" value="palm"/>
                 <param name="maxIterations" type="int" value="1000"/>

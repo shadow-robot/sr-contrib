@@ -32,3 +32,4 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 rosbuild_add_executable(sr_arm_kinematics6D src/IK6D_arm6dof_upto_palm.cpp src/sr_arm_kinematics6D.cpp)
 target_link_libraries(sr_arm_kinematics6D lapack)
 
+rosbuild_add_executable(upmc_fkik_arm_test test/upmc_fkik_arm_test.cpp)

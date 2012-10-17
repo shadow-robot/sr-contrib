@@ -240,6 +240,7 @@ bool Kinematics::readJoints(urdf::Model &robot_model) {
         link = robot_model.getLink(link->getParent()->name);
     }
     return true;
+    
 }
 
 
@@ -367,8 +368,14 @@ bool Kinematics::getPositionIK(kinematics_msgs::GetPositionIK::Request &request,
 		jnt_pos_out_temp.resize(num_joints);  
 		
 		float costlimit=999;
-		
+    ros::Time timer_start=ros::Time::now();
+    
 		bool bSuccess = myIKfast->ik(eetrans, eerot, NULL, solutions);
+    
+    ros::Time timer_stop=ros::Time::now();
+    ros::Duration ik_duration=timer_stop-timer_start;
+    ROS_DEBUG("IK computation time: %f sec",ik_duration.toSec());
+    
 		if( !bSuccess ) {
         ROS_DEBUG("Failed to get ik solution\n");
         ik_valid = 0;
@@ -379,7 +386,7 @@ bool Kinematics::getPositionIK(kinematics_msgs::GetPositionIK::Request &request,
       std::vector<IkReal> solvalues(GetNumJoints());
 
 			unsigned int	outerlimit=0;
-      for(std::size_t i = 0; i < solutions.GetNumSolutions(); ++i)
+      for(int i = solutions.GetNumSolutions()-1; i >=0 ; i--)
     	{
         ik_valid = 1;
         
@@ -389,8 +396,6 @@ bool Kinematics::getPositionIK(kinematics_msgs::GetPositionIK::Request &request,
         std::vector<IkReal> vsolfree(sol.GetFree().size());
         sol.GetSolution(&solvalues[0],vsolfree.size()>0?&vsolfree[0]:NULL);      
                 
-
-        
 				// check if solution is within the limits
         for(unsigned int j=0; j<num_joints && j<solvalues.size(); ++j)
 				{
@@ -410,35 +415,44 @@ bool Kinematics::getPositionIK(kinematics_msgs::GetPositionIK::Request &request,
 						}
 				
 				// choose the solution that is farthest from the limit using a cost function
+        
 				if(ik_valid)
 				{
+          
+        // /*
 					float tempcostlimit=jointlimitCostfunction(jnt_pos_out_temp);
 					if(tempcostlimit<costlimit)
 					{
-						costlimit=tempcostlimit;
+						costlimit=tempcostlimit; //*/
 						for(unsigned int i=0; i<num_joints; i++)
 						{
 							jnt_pos_out(i)=jnt_pos_out_temp(i);
 							ROS_DEBUG("Cost: %f, temp solution joint %d,%f",costlimit,i,jnt_pos_out(i));
 						}
+            // only if removing cost computation => uncomment // break; /*
+            
 					}
 					else
 					{
 						ROS_DEBUG("Cost: %f > %f",tempcostlimit ,costlimit );
 					}
+          // */
 				}
 	        
     	}
 
-			if(outerlimit>=solutions.GetNumSolutions())
+			///*
+      if(outerlimit>=solutions.GetNumSolutions())
 				ik_valid=0;
 			else
-				ik_valid=1;
-
-   	 	for(unsigned int i=0; i<num_joints; i++)
-			{
-				ROS_DEBUG("Chosen solution joint %d,%f",i,jnt_pos_out(i));
-			}
+				ik_valid=1; //*/
+      if(ik_valid==1)
+      {
+        for(unsigned int i=0; i<num_joints; i++)
+        {
+          ROS_DEBUG("Chosen solution joint %d,%f",i,jnt_pos_out(i));
+        }
+      }
 		}
 
     	if (ik_valid > 0) {
@@ -488,7 +502,7 @@ bool Kinematics::getPositionFK(kinematics_msgs::GetPositionFK::Request &request,
         int tmp_index = getJointIndex(request.robot_state.joint_state.name[i]);
         if (tmp_index >=0)
 				{
-            jnt_pos_in(tmp_index) = request.robot_state.joint_state.position[i];
+            //old request through KDL jnt_pos_in(tmp_index) = request.robot_state.joint_state.position[i];
 						jin[i]=request.robot_state.joint_state.position[i];
 				}
     }
@@ -501,39 +515,47 @@ bool Kinematics::getPositionFK(kinematics_msgs::GetPositionFK::Request &request,
     response.pose_stamped.resize(request.fk_link_names.size());
     response.fk_link_names.resize(request.fk_link_names.size());
 
-    bool valid = true;
+    //bool valid = true;
     for (unsigned int i=0; i < request.fk_link_names.size(); i++) {
         int segmentIndex = getKDLSegmentIndex(request.fk_link_names[i]);
         ROS_DEBUG("End effector index: %d",segmentIndex);
         ROS_DEBUG("Chain indices: %d",chain.getNrOfSegments());
-        if (fk_solver->JntToCart(jnt_pos_in,p_out,segmentIndex) >=0) {
+        //old request through KDL //if (fk_solver->JntToCart(jnt_pos_in,p_out,segmentIndex) >=0) {
             tf_pose.frame_id_ = root_name;
             tf_pose.stamp_ = ros::Time();
-            tf::PoseKDLToTF(p_out,tf_pose);
-            try {
+            //old request through KDL tf::PoseKDLToTF(p_out,tf_pose);
+            //old request through KDL 
+            /* try {
                 tf_listener.transformPose(request.header.frame_id,tf_pose,tf_pose);
             } catch (...) {
                 ROS_ERROR("Could not transform FK pose to frame: %s",request.header.frame_id.c_str());
                 response.error_code.val = response.error_code.FRAME_TRANSFORM_FAILURE;
                 return false;
             }
-            tf::poseStampedTFToMsg(tf_pose,pose);
+            */
+            //tf::poseStampedTFToMsg(tf_pose,pose);
+            //store position
+            pose.pose.position.x = (double)eetrans[0];
+            pose.pose.position.y = (double)eetrans[1];
+            pose.pose.position.z = (double)eetrans[2];
+            
+            //transform a rotation matrix into quaternion
+            btMatrix3x3 Rot;
+            Rot.setValue((double)eerot[0],(double)eerot[1],(double)eerot[2],(double)eerot[3],(double)eerot[4],(double)eerot[5],(double)eerot[6],(double)eerot[7],(double)eerot[8]);
+            tf::Quaternion quat;
+            Rot.getRotation(quat);
+            ROS_DEBUG("Fk result Quat %8.4f %8.4f %8.4f %8.3f",quat.getX(),quat.getY(),quat.getZ(),quat.getW() );
+            //store orientation
+            pose.pose.orientation.x = quat.getX();
+            pose.pose.orientation.y = quat.getY();
+            pose.pose.orientation.z = quat.getZ();
+            pose.pose.orientation.w = quat.getW();
+            
+            pose.header.frame_id="shadowarm_base";
             response.pose_stamped[i] = pose;
-
-  					tf::Quaternion quat = tf_pose.getRotation();
-      	     btMatrix3x3 Rot(quat);
-						tf::Point rotcol1 = Rot.getRow(0);
-						tf::Point rotcol2 = Rot.getRow(1);
-						tf::Point rotcol3 = Rot.getRow(2);
-            ROS_DEBUG("kdl fk r0,r1,r2,r3,r4,r5,r6,r7,r8:\n%f %f %f\n%f %f %f\n%f %f %f\n",rotcol1.x(),rotcol1.y(),rotcol1.z(),rotcol2.x(),rotcol2.y(),rotcol2.z(),rotcol3.x(),rotcol3.y(),rotcol3.z());
-
+            
             response.fk_link_names[i] = request.fk_link_names[i];
             response.error_code.val = response.error_code.SUCCESS;
-        } else {
-            ROS_ERROR("Could not compute FK for %s",request.fk_link_names[i].c_str());
-            response.error_code.val = response.error_code.NO_FK_SOLUTION;
-            valid = false;
-        }
     }
     return true;
 }
