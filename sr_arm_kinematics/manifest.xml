@@ -1,8 +1,9 @@
 <package>
   <description brief="sr_arm_kinematics">
 
-    Currently only contains a launch file to start arm_kinematics for the shadow_arm
+    Inverse Kinematics for the Shadow_arm using KDL or IKFAST
     Depends on arm_kinematics package which you should compile and install from source see arm_kinematics on the ROS wiki
+    Depends on lapack only for IKFAST
 
   </description>
   <author>Guillaume WALCK (UPMC)</author>
@@ -10,7 +11,13 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/sr_arm_kinematics</url>
   <depend package="arm_kinematics"/>
-
+  <depend package="tf"/>
+  <depend package="urdf" />
+  <depend package="kdl_parser"/>
+  <depend package="sensor_msgs"/>
+  <depend package="tf_conversions"/>
+  <depend package="kinematics_msgs"/>
+  <rosdep name="lapack" />
 </package>
 
 
