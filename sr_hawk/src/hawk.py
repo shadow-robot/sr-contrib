@@ -124,7 +124,7 @@ class HAWK(object):
         # we'll assume (but it's not true) that rfj4 is fixed
         self.hawk_to_hand_mapping[ self.hawk_names.index("ff_abd") ][ self.hand_names.index("FFJ4")] = 1.0
         self.hawk_to_hand_mapping[ self.hawk_names.index("mf_abd") ][ self.hand_names.index("MFJ4")] = 1.0
-        self.hawk_to_hand_mapping[ self.hawk_names.index("rf_abd") ][ self.hand_names.index("LFJ4")] = 1.0
+        self.hawk_to_hand_mapping[ self.hawk_names.index("rf_abd") ][ self.hand_names.index("LFJ4")] = -1.0
 
         #for debug purpose: write the mapping to /tmp/mapping.csv
         self.save_map_to_file_(self.hawk_to_hand_mapping)
