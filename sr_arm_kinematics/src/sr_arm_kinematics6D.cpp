@@ -333,7 +333,13 @@ bool Kinematics::getPositionIK(kinematics_msgs::GetPositionIK::Request &request,
 
   tf::Point p = transform_root.getOrigin();
   tf::Quaternion quat = transform_root.getRotation();
+
+#if ROS_VERSION_MINIMUM(1,8,0)
+  tf::Matrix3x3 Rot(quat);
+#else
   btMatrix3x3 Rot(quat);
+#endif
+
   tf::Point rotcol1 = Rot.getRow(0);
   tf::Point rotcol2 = Rot.getRow(1);
   tf::Point rotcol3 = Rot.getRow(2);
@@ -540,7 +546,11 @@ bool Kinematics::getPositionFK(kinematics_msgs::GetPositionFK::Request &request,
     pose.pose.position.z = (double)eetrans[2];
 
     //transform a rotation matrix into quaternion
+#if ROS_VERSION_MINIMUM(1,8,0)
+    tf::Matrix3x3 Rot;
+#else
     btMatrix3x3 Rot;
+#endif
     Rot.setValue((double)eerot[0],(double)eerot[1],(double)eerot[2],(double)eerot[3],(double)eerot[4],(double)eerot[5],(double)eerot[6],(double)eerot[7],(double)eerot[8]);
     tf::Quaternion quat;
     Rot.getRotation(quat);
