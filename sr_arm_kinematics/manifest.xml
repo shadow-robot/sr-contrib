@@ -17,7 +17,7 @@
   <depend package="sensor_msgs"/>
   <depend package="tf_conversions"/>
   <depend package="kinematics_msgs"/>
-  <rosdep name="lapack" />
+  <rosdep name="liblapack" />
 </package>
 
 
