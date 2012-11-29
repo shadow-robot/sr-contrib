@@ -51,3 +51,5 @@ sr_spike_logger/build
 ./sr_hand_kinematics/kdl_coupling/bin
 ./sr_hand_kinematics/kdl_coupling/build
 ./sr_hand_kinematics/kdl_coupling/lib
+sr_arm_kinematics/bin/sr_arm_kinematics6D
+sr_arm_kinematics/bin/upmc_fkik_arm_test
