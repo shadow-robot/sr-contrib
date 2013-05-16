@@ -36,21 +36,26 @@ class TransformLearner(object):
         self.baselink_averages = []
 
         self.rate = rospy.Rate(20)
-
-        self.markers = { "/PATTERN_1": Pose( [-0.56297, 0.11, 0.0035],
+        # Position of the center of the calibration pattern sheet (the printed Roboearth sheet) with respect to the base frame.
+        # This needs to be measured manually (sadly). The pattern sheet needs to be horizontal, and aligned (i.e. not rotated, only translated)
+        # with the base frame.
+        #  The advantage of this method is that the pattern sheet frame is only translated, and not rotated
+        # wrt the base, so measurements can be taken easily. This learn tf module will then allow us to learn the frame of the kinect wrt to the base 
+        # (as this commonly involves rotations it is much more difficult to measure manually).
+        self.calib_pattern_pose = [0.90, 0.40, 1.22]
+        self.markers = { "/PATTERN_1": Pose( [-self.calib_pattern_pose[0] - 0.11, -self.calib_pattern_pose[1] + 0.11, -self.calib_pattern_pose[2] ],
                                              [0.0, 0.0, 0.0, 1.0] ),
-                         "/PATTERN_2": Pose( [-0.45097, 0.11, 0.0035],
+                         "/PATTERN_2": Pose( [-self.calib_pattern_pose[0] + 0.0, -self.calib_pattern_pose[1] + 0.11, -self.calib_pattern_pose[2] ],
                                              [0.0, 0.0, 0.0, 1.0] ),
-                         "/PATTERN_3": Pose( [-0.34097, 0.0, 0.0035],
+                         "/PATTERN_3": Pose( [-self.calib_pattern_pose[0] + 0.11, -self.calib_pattern_pose[1] + 0.0, -self.calib_pattern_pose[2] ],
                                              [0.0, 0.0, 0.0, 1.0] ),
-                         "/PATTERN_4": Pose( [-0.34097, -0.11, 0.0035],
+                         "/PATTERN_4": Pose( [-self.calib_pattern_pose[0] + 0.11, -self.calib_pattern_pose[1] - 0.11, -self.calib_pattern_pose[2] ],
                                              [0.0, 0.0, 0.0, 1.0] ),
-                         "/PATTERN_5": Pose( [-0.45097, -0.11, 0.0035],
+                         "/PATTERN_5": Pose( [-self.calib_pattern_pose[0] + 0.0, -self.calib_pattern_pose[1] -0.11, -self.calib_pattern_pose[2] ],
                                              [0.0, 0.0, 0.0, 1.0] ),
-                         "/PATTERN_6": Pose( [-0.56297, 0.0, 0.0035],
+                         "/PATTERN_6": Pose( [-self.calib_pattern_pose[0] - 0.11, -self.calib_pattern_pose[1] + 0.0, -self.calib_pattern_pose[2] ],
                                              [0.0, 0.0, 0.0, 1.0] )
                         }
-
         self.run()
 
     def run(self):
