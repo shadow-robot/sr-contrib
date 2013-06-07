@@ -1,0 +1,8 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: sr_description
+    relative_path: robots/urdf/arm_and_hand_motor.urdf
+  SRDF:
+    relative_path: config/arm_and_hand.srdf
+  CONFIG:
+    generated_timestamp: 1369807774

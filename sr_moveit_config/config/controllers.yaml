@@ -1,0 +1,12 @@
+controller_manager_ns: pr2_controller_manager
+controller_list:
+  - name: r_arm_joint_trajectory_controller
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - ShoulderJRotate
+      - ShoulderJSwing
+      - ElbowJSwing
+      - ElbowJRotate
+      - WRJ2
+      - WRJ1
