@@ -112,6 +112,22 @@
         <joint name="THJ4" value="1.309" />
         <joint name="THJ5" value="0.2" />
     </group_state>
+    <group_state name="right_turn" group="right_arm">
+        <joint name="ElbowJRotate" value="0" />
+        <joint name="ElbowJSwing" value="1.7494" />
+        <joint name="ShoulderJRotate" value="-0.7853" />
+        <joint name="ShoulderJSwing" value="0" />
+        <joint name="WRJ1" value="0" />
+        <joint name="WRJ2" value="0" />
+    </group_state>
+    <group_state name="left turn" group="right_arm">
+        <joint name="ElbowJRotate" value="0" />
+        <joint name="ElbowJSwing" value="1.7494" />
+        <joint name="ShoulderJRotate" value="1.5707" />
+        <joint name="ShoulderJSwing" value="0" />
+        <joint name="WRJ1" value="0" />
+        <joint name="WRJ2" value="0" />
+    </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="right_hand" parent_link="palm" group="right_hand" parent_group="right_arm" />
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
