@@ -95,3 +95,37 @@ controller_list:
       - THJ3
       - THJ2
       - THJ1
+  - name: fake_middle_finger_thumb_controller
+    joints:
+      - MFJ4
+      - MFJ3
+      - MFJ2
+      - MFJ1
+      - THJ5
+      - THJ4
+      - THJ3
+      - THJ2
+      - THJ1
+  - name: fake_ring_finger_thumb_controller
+    joints:
+      - RFJ4
+      - RFJ3
+      - RFJ2
+      - RFJ1
+      - THJ5
+      - THJ4
+      - THJ3
+      - THJ2
+      - THJ1
+  - name: fake_little_finger_thumb_controller
+    joints:
+      - LFJ5
+      - LFJ4
+      - LFJ3
+      - LFJ2
+      - LFJ1
+      - THJ5
+      - THJ4
+      - THJ3
+      - THJ2
+      - THJ1
