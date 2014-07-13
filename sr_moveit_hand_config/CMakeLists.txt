@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(sr_moveit_config)
+project(sr_moveit_hand_config)
 
 find_package(catkin REQUIRED)
 
