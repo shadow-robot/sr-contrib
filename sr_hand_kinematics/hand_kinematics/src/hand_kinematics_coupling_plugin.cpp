@@ -38,7 +38,7 @@ static const std::string FK_INFO_SERVICE = "get_fk_solver_info";
 namespace hand_kinematics {
 static const double IK_DEFAULT_TIMEOUT = 10.0;
 //register the plugin
-PLUGINLIB_DECLARE_CLASS(hand_kinematics,HandKinematicsPlugin, hand_kinematics::HandKinematicsPlugin, kinematics::KinematicsBase)
+PLUGINLIB_EXPORT_CLASS( hand_kinematics::HandKinematicsPlugin, kinematics::KinematicsBase)
 
   HandKinematicsPlugin::HandKinematicsPlugin():active_(false){}
 
@@ -59,7 +59,7 @@ PLUGINLIB_DECLARE_CLASS(hand_kinematics,HandKinematicsPlugin, hand_kinematics::H
     urdf::Model robot_model;
     std::string xml_string;
     ros::NodeHandle private_handle("~/"+group_name);
-
+    ROS_INFO("Started IK for %s",tip_frame_.c_str());
     while(!loadRobotModel(private_handle,robot_model,base_frame_,tip_frame_,xml_string) && private_handle.ok())
     {
       ROS_ERROR("Could not load robot model. Are you sure the robot model is on the parameter server?");
@@ -204,7 +204,7 @@ PLUGINLIB_DECLARE_CLASS(hand_kinematics,HandKinematicsPlugin, hand_kinematics::H
       else if(tip_frame_.find("lftip")!=std::string::npos )
         jnt_pos_in(4)=jnt_pos_in(3);
       if(i>0)
-        ROS_INFO("IK Recalculation step: %d",i);
+        ROS_DEBUG("IK Recalculation step: %d",i);
     }
 
     if(ik_valid >= 0)
@@ -315,7 +315,7 @@ PLUGINLIB_DECLARE_CLASS(hand_kinematics,HandKinematicsPlugin, hand_kinematics::H
       else if(tip_frame_.find("lftip")!=std::string::npos )
         jnt_pos_in(4)=jnt_pos_in(3);
       if(i>0)
-        ROS_INFO("IK Recalculation step: %d",i);
+        ROS_DEBUG("IK Recalculation step: %d",i);
     }
     
     if(ik_valid >= 0)
